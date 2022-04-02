@@ -7,20 +7,22 @@
   <link rel="stylesheet" href="styles.css">
   <title>Update data product</title>
 </head>
-<body>
+<body style="top:0;margin:0">
+<?php require('error.php')?>
+</div>
   <h1>Update information</h1>
   <form method="post">
     <div class="form-group">
       <label>Name:</label>
-      <input type="text" name="name" value="<?=$name?>" required/>
+      <input type="text" name="name" value="<?=$name?>"/>
     </div>
     <div class="form-group">
       <label>Price:</label>
-      <input type="number" name="price" value="<?=$price?>" required/>
+      <input type="number" name="price" value="<?=$price?>"/>
     </div>
     <div class="form-group">
       <label>Description:</label>
-      <input type="text" name="description" value="<?=$description?>" required/>
+      <input type="text" name="description" value="<?=$description?>"/>
     </div>
     <div class="form-group">
       <button type="submit" name="submit">Submit</button>

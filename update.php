@@ -9,16 +9,21 @@ $name = $row['name'];
 $price = $row['price'];
 $description = $row['description'];
 
-if (isset($_POST['submit'])) {
-  $name=$_POST['name'];
-  $price=$_POST['price'];
-  $description=$_POST['description'];
+require 'validateData.php';
 
-  $sql = "update `products`
-          set name='$name', price='$price', description='$description'
-          where id=$id";
-  $connect->query($sql) or die($connect->error());
-  header('location:/');
+if (isset($_POST['submit'])) {
+    if ($nameError == "" && $priceError == "" && $descriptionError == "") {
+        $sql = "update `products`
+          set name=?, price=?, description=?
+          where id=?";
+        $result = $connect->prepare($sql);
+        $result->bind_param('sisi', $name, $price, $description, $id);
+        //$connect->query($sql) or die($connect->error());
+        $result->execute() or die($result->error());
+        header('location:/');
+    } else {
+        $submitError = "you didnt enter data corectly";
+    }
 }
 
 require 'update.view.php';

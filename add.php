@@ -1,18 +1,16 @@
 <?php
 require 'connection.php';
+require 'validateData.php';
+require 'add.view.php';
 
 if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $description = $_POST['description'];
-
-    if ($price < 0) {
-      echo "The price can't have a value less than 0";
+    if ($nameError == "" && $priceError == "" && $descriptionError == "") {
+        $sql = "INSERT INTO `products` (name,price,description) VALUES(?,?,?)";
+        $result = $connect->prepare($sql);
+        $result->bind_param('sis', $name, $price, $description);
+        $result->execute();
+        header("location: /");
     } else {
-      $sql = "insert into `products` (name, price, description) values('$name','$price','$description')";
-      $connect->query($sql) or die($connect->error());
-      header("location: /");
+        $submitError = "you didnt enter data corectly";
     }
 }
-
-require "add.view.php";
